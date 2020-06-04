@@ -173,7 +173,7 @@ h1{
   background-color: #73C6B6;
   cursor: pointer;
 }
-#mazeselect{
+#mazeselectlarge, #mazeChangeSmall{
   color:white;
 }
 

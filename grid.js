@@ -159,20 +159,6 @@ let clearTrail = function(){
     }
   }
 
-  // Now we've cleared the board, we have to restore the topography that was present
-  // for(let i=0;i<numRows;i++){
-  //   for(let j=0;j<numCols;j++){
-  //     if(grid[i][j].cost==5){
-  //       var id = generateId(i,j);
-  //       document.getElementById(id).style.cssText = "background-color:red;";
-  //     }else if(grid[i][j].cost==2){
-  //       makePink(i,j);
-  //     }else if(grid[i][j].cost==1){
-  //       makeLightPink(i,j);
-  //     }
-  //   }
-  // }
-
   // Set the goal node back to purple (turned yellow by the path discovered )
   var id = generateId(endX,endY);
   document.getElementById(id).style.cssText = "background-color:purple;";
@@ -322,68 +308,6 @@ let runAlgorithm = function(){
 
 }
 
-// Used to listen to changing select events
-let infoChange = function(){
-  var select = document.getElementById("algorithms");
-  var value = select.options[select.selectedIndex].value;
-  if (value == "a"){
-    astarInfo();
-  }else if(value=="dj"){
-    djInfo();
-  }else if(value=="bfs"){
-    bfsInfo();
-  }else{
-    dfsInfo();
-  }
-}
-
-// This sets the information on the LHS to be about hill climb
-let hillClimbInfo = function(){
-  document.getElementById("title").innerHTML = "HILL CLIMB";
-  document.getElementById("subtitle").innerHTML = "A greedy search that finds a maximum point";
-  document.getElementById("text-para1").innerHTML = "A hill climb has no goal, and no intuition of a 'path' to follow. It simply examines all of it's neighbours, and moves to the one with the greatest cost (aiming to find a peak).";
-  document.getElementById("text-para2").innerHTML = "However, a hill climb may get stuck at local maxima, where all surrounding squares are worse. The agent has no way to determine if there is a greater peak somewhere else.";
-  document.getElementById("text-para3").innerHTML = "It may also get stuck on a plateau. Run the hill climb algorithm on a blank grid and it will wander aimlessly. The algorithm cuts off after twenty steps without improvement.";
-}
-
-// This sets the information on the LHS to be about A* search
-let astarInfo = function(){
-  document.getElementById("title").innerHTML = "A* SEARCH";
-  document.getElementById("subtitle").innerHTML = "An optimal search utilising heuristics";
-  document.getElementById("text-para1").innerHTML = "A* search combines "+"g".italics()+" and "+"h".italics()+" costs to determine the cost of each cell.";
-  document.getElementById("text-para2").innerHTML = "Each cell has the distance from the source, the cost of that square (determined by the topography) and an estimated distance to the goal summed together, and at each turn, the square with the smallest value is selected.";
-  document.getElementById("text-para3").innerHTML = "It will always find the shortest route, as it hones in on the target, always picking the square closest to leading it to the target";
-}
-
-// This sets the infomation on the LHS to be about Dijkstra's algorithm
-let djInfo = function(){
-  document.getElementById("title").innerHTML = "DIJKSTRA";
-  document.getElementById("subtitle").innerHTML = "Finds the path of least cost but not necessarily of shortest length";
-  document.getElementById("text-para1").innerHTML = "Dijkstra's algorithm assigns each square a distance, intitially of positive infinity. Unvisited squares are considered in order, the square with the smallest current distance prioritised. ";
-  document.getElementById("text-para2").innerHTML = "For each square, the distance of the new path is calculated (by summing the path cost, and the cost of that square). If this is less than the current cost, the cost is updated. This guarantees that the shortest path is found from the start square, to every other square on the grid.";
-  document.getElementById("text-para3").innerHTML = "When ran on a weighted topography, the algorithm will find the path of least cost, avoiding expensive peaks. When run on a blank grid, it operates the same way as a BFS search.";
-
-}
-
-// This sets the infomation on the LHS to be about BFS algorithm
-let bfsInfo = function(){
-  document.getElementById("title").innerHTML = "BREADTH FIRST SEARCH";
-  document.getElementById("subtitle").innerHTML = "Guaranteed to find the optimal path";
-  document.getElementById("text-para1").innerHTML = "BFS visits square in an uninformed manner. It has no intuition of which square is 'best', or which square is more likely to lead to the goal.";
-  document.getElementById("text-para2").innerHTML = "Adjacent squares are stored in a queue, and are visited in turn, examined to check whether the goal has been reached, and if not, then are added to the back of the queue. If run on amaze, the algorithm will branch down multiple pathways simultaneously.";
-  document.getElementById("text-para3").innerHTML = "The algorithm also has no intuition of path cost, and so if run on a topography, will ignore any associated path costs and treat the grid as if it were blank.";
-
-}
-
-// This sets the infomation on the LHS to be about DFS algorithm
-let dfsInfo = function(){
-  document.getElementById("title").innerHTML = "DEPTH FIRST SEARCH";
-  document.getElementById("subtitle").innerHTML = "Not guaranteed to find the optimal path";
-  document.getElementById("text-para1").innerHTML = "DFS visits square in an uninformed manner. It has no intuition of which square is 'best', or which square is more likely to lead to the goal.";
-  document.getElementById("text-para2").innerHTML = "Squares are stored in a stack, with the most recently visited squares the first to be explored. This causes the algorithm to branch, and then pursue a single branch until it cannot move any further, upon which the algorithm backtracks. If run on a maze, the algorithm will pursue a single branch way until either the goal is met or it hits a dead end, before backtracking and trying a different direction. ";
-  document.getElementById("text-para3").innerHTML = "The algorithm also has no intuition of path cost, and so if run on a topography, will ignore any associated path costs and treat the grid as if it were blank.";
-
-}
 
 // This function creates the table on the screen
 let createTable = function(){

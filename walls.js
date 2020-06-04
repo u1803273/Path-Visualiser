@@ -4,11 +4,29 @@ var finishedMaze;
 var filled;
 var squares;
 
-// Handles the changing maze select box
-let mazeChange = function(){
+let mazeChangeSmall = function(){
   finishedMaze=false;
   filled=0;
-  var choice = document.getElementById("mazeselect").value;
+  //var choice = document.getElementById("mazeselect").value;
+  var select = document.getElementById("mazeselectsmall");
+  var choice = select.options[select.selectedIndex].value;
+  switch(choice){
+    case "random":
+      randomMaze();
+      break;
+    case "recursive":
+      recursiveMaze();
+      break;
+  }
+}
+
+// Handles the changing maze select box
+let mazeChangeLarge = function(){
+  finishedMaze=false;
+  filled=0;
+  //var choice = document.getElementById("mazeselect").value;
+  var select = document.getElementById("mazeselectlarge");
+  var choice = select.options[select.selectedIndex].value;
   switch(choice){
     case "random":
       randomMaze();
@@ -127,8 +145,38 @@ let recursiveMaze = function(){
   // Clear the existing board
   clearBoard();
 
-  recursiveMazeGeneration(0,numRows-1,0,numCols-1);
-  alert("done");
+  // Set the borders to black
+  borders();
+
+  recursiveMazeGeneration(1,numRows-2,1,numCols-2);
+
+  // Set the start and goal nodes
+  var id = generateId(startX,startY);
+  document.getElementById(id).style.cssText = "background-color:purple;";
+  grid[startX][startY].filled = false;
+  id = generateId(endX,endY);
+  document.getElementById(id).style.cssText = "background-color:purple;";
+  grid[endX][endY].filled = false;
+
+}
+
+let borders = function(){
+  for(let i=0;i<numRows;i++){
+    if(i==0 || i==numRows-1){
+      for(let j =0;j<numCols;j++){
+        var id = generateId(i,j);
+        document.getElementById(id).style.cssText = "background-color:black;";
+        grid[i][j].filled = true;
+      }
+    }else{
+      var id = generateId(i,0);
+      document.getElementById(id).style.cssText = "background-color:black;";
+      grid[i][0].filled = true;
+      id = generateId(i,numCols-1);
+      document.getElementById(id).style.cssText = "background-color:black;";
+      grid[i][numCols-1].filled=true;
+    }
+  }
 }
 
 // The recursive algorithm
@@ -138,8 +186,8 @@ let recursiveMazeGeneration = function(sx, ex,sy,ey){
     return true;
   }
   else{
-    console.log("");
-    console.log("in: ",sx,ex,sy,ey);
+    // console.log("");
+    // console.log("in: ",sx,ex,sy,ey);
 
     var width=ex-sx;
     var height = ey-sy;
@@ -154,7 +202,7 @@ let recursiveMazeGeneration = function(sx, ex,sy,ey){
     // Switch based on direction
     switch(direction){
       case "down":
-        console.log("down");
+        // console.log("down");
         // Randomly chose the point to drop dowm
         var point = Math.floor(Math.random()*height) + sy;
         drawVertLine(point,sx,ex);
@@ -162,28 +210,29 @@ let recursiveMazeGeneration = function(sx, ex,sy,ey){
         var gap = Math.floor(Math.random()*width) + sx;
         var id = generateId(gap,point);
         document.getElementById(id).style.cssText = "background-color:white;";
+        grid[gap][point].filled = false;
 
-        // // LHS
-        // recursiveMazeGeneration(sx,ex,sy,point-1);
-        // // RHS
-        // recursiveMazeGeneration(sx,ex,point+1,ey);
+        // LHS
+        recursiveMazeGeneration(sx,ex,sy,point-2);
+        // RHS
+        recursiveMazeGeneration(sx,ex,point+2,ey);
 
-        console.log("---down---");
-        console.log("point: "+point);
-        console.log("gap: "+gap);
-        console.log(sx,gap-1,sy,point-1);
-        console.log(gap+1,ex,sy,point-1);
-        console.log(sx,gap-1,point+1,ey);
-        console.log(gap+1,ex,point+1,ey);
-
-        recursiveMazeGeneration(sx,gap-1,sy,point-1);
-        recursiveMazeGeneration(gap+1,ex,sy,point-1);
-        recursiveMazeGeneration(sx,gap-1,point+1,ey);
-        recursiveMazeGeneration(gap+1,ex,point+1,ey);
+        // console.log("---down---");
+        // console.log("point: "+point);
+        // console.log("gap: "+gap);
+        // console.log(sx,gap-1,sy,point-1);
+        // console.log(gap+1,ex,sy,point-1);
+        // console.log(sx,gap-1,point+1,ey);
+        // console.log(gap+1,ex,point+1,ey);
+        //
+        // recursiveMazeGeneration(sx,gap-1,sy,point-1);
+        // recursiveMazeGeneration(gap+1,ex,sy,point-1);
+        // recursiveMazeGeneration(sx,gap-1,point+1,ey);
+        // recursiveMazeGeneration(gap+1,ex,point+1,ey);
 
         break;
       case "across":
-        console.log("across");
+        // console.log("across");
         // Randomly chose the point to go across
         var point = Math.floor(Math.random()*width) + sx;
         drawHorLine(point,sy,ey);
@@ -191,24 +240,25 @@ let recursiveMazeGeneration = function(sx, ex,sy,ey){
         var gap = Math.floor(Math.random()*height) + sy;
         var id = generateId(point,gap);
         document.getElementById(id).style.cssText = "background-color:white;";
+        grid[point][gap].filled = false;
 
-        // // ABOVE
-        // recursiveMazeGeneration(sx,point-1,sy,ey);
-        // // BELOW
-        // recursiveMazeGeneration(point+1,ex,sy,ey);
+        // ABOVE
+        recursiveMazeGeneration(sx,point-1,sy,ey);
+        // BELOW
+        recursiveMazeGeneration(point+1,ex,sy,ey);
 
-        console.log("---across---");
-        console.log("point: "+point);
-        console.log("gap: "+gap);
-        console.log(sx,point-1,sy,gap-1);
-        console.log(point+1,ex,sy,gap-1);
-        console.log(sx,point-1,gap+1,sy);
-        console.log(point+1,ex,gap+1,sy);
-
-        recursiveMazeGeneration(sx,point-1,sy,gap-1);
-        recursiveMazeGeneration(point+1,ex,sy,gap-1);
-        recursiveMazeGeneration(sx,point-1,gap+1,ey);
-        recursiveMazeGeneration(point+1,ex,gap+1,ey);
+        // console.log("---across---");
+        // console.log("point: "+point);
+        // console.log("gap: "+gap);
+        // console.log(sx,point-1,sy,gap-1);
+        // console.log(point+1,ex,sy,gap-1);
+        // console.log(sx,point-1,gap+1,sy);
+        // console.log(point+1,ex,gap+1,sy);
+        //
+        // recursiveMazeGeneration(sx,point-1,sy,gap-1);
+        // recursiveMazeGeneration(point+1,ex,sy,gap-1);
+        // recursiveMazeGeneration(sx,point-1,gap+1,ey);
+        // recursiveMazeGeneration(point+1,ex,gap+1,ey);
 
         break;
     }
@@ -221,6 +271,7 @@ let drawVertLine = function(y,sx,ex){
   for(let i=sx;i<=ex;i++){
     var id = generateId(i,y);
     document.getElementById(id).style.cssText = "background-color:#262626;";
+    grid[i][y].filled = true;
   }
 }
 
@@ -229,5 +280,6 @@ let drawHorLine = function(x,sy,ey){
   for(let i=sy;i<=ey;i++){
     var id = generateId(x,i);
     document.getElementById(id).style.cssText = "background-color:#262626;";
+    grid[x][i].filled = true;
   }
 }
