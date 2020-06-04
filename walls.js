@@ -38,6 +38,7 @@ let mazeChangeLarge = function(){
 }
 
 let randomMaze = function(){
+  clearBoard();
   squares = [];
   for(let i=0;i<numRows;i++){
     var newRow = [];
@@ -154,6 +155,10 @@ let recursiveMaze = function(){
   var id = generateId(startX,startY);
   document.getElementById(id).style.cssText = "background-color:purple;";
   grid[startX][startY].filled = false;
+
+  // If the four surrounding walls are walls remove them
+  if(grid[startX-1])
+
   id = generateId(endX,endY);
   document.getElementById(id).style.cssText = "background-color:purple;";
   grid[endX][endY].filled = false;
@@ -165,15 +170,15 @@ let borders = function(){
     if(i==0 || i==numRows-1){
       for(let j =0;j<numCols;j++){
         var id = generateId(i,j);
-        document.getElementById(id).style.cssText = "background-color:black;";
+        document.getElementById(id).style.cssText = "background-color:#262626;";
         grid[i][j].filled = true;
       }
     }else{
       var id = generateId(i,0);
-      document.getElementById(id).style.cssText = "background-color:black;";
+      document.getElementById(id).style.cssText = "background-color:#262626;";
       grid[i][0].filled = true;
       id = generateId(i,numCols-1);
-      document.getElementById(id).style.cssText = "background-color:black;";
+      document.getElementById(id).style.cssText = "background-color:#262626;";
       grid[i][numCols-1].filled=true;
     }
   }
