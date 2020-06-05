@@ -260,7 +260,7 @@ let disableButtons = function(){
   document.getElementById('reset').style.cssText  = "pointer-events:none;";
   document.getElementById('topography').style.cssText  = "pointer-events:none;";
   document.getElementById('clearTrail').style.cssText  = "pointer-events:none;";
-  document.getElementById('randomWalls').style.cssText  = "pointer-events:none;";
+  document.getElementById('walls').style.cssText  = "pointer-events:none;";
 
   running = true;
 }
@@ -272,7 +272,7 @@ let renableButtons = function(){
   document.getElementById('reset').style.cssText  = "pointer-events:auto;";
   document.getElementById('topography').style.cssText  = "pointer-events:auto;";
   document.getElementById('clearTrail').style.cssText  = "pointer-events:auto;";
-  document.getElementById('randomWalls').style.cssText  = "pointer-events:auto;";
+  document.getElementById('walls').style.cssText  = "pointer-events:auto;";
 
   running = false;
 }

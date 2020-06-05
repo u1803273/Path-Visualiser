@@ -4,41 +4,50 @@ var finishedMaze;
 var filled;
 var squares;
 
+// Handles the changing maze select box for small devices
 let mazeChangeSmall = function(){
-  finishedMaze=false;
-  filled=0;
-  //var choice = document.getElementById("mazeselect").value;
-  var select = document.getElementById("mazeselectsmall");
-  var choice = select.options[select.selectedIndex].value;
-  switch(choice){
-    case "random":
-      randomMaze();
-      break;
-    case "recursive":
-      recursiveMaze();
-      break;
+  if(small){
+    clearBoard();
+    finishedMaze=false;
+    filled=0;
+    //var choice = document.getElementById("mazeselect").value;
+    var select = document.getElementById("mazeselectsmall");
+    var choice = select.options[select.selectedIndex].value;
+    switch(choice){
+      case "random":
+        console.log("1");
+        randomMaze();
+        break;
+      case "recursive":
+        console.log("2");
+        recursiveMaze();
+        break;
+    }
   }
 }
 
-// Handles the changing maze select box
+// Handles the changing maze select box for large screens
 let mazeChangeLarge = function(){
-  finishedMaze=false;
-  filled=0;
-  //var choice = document.getElementById("mazeselect").value;
-  var select = document.getElementById("mazeselectlarge");
-  var choice = select.options[select.selectedIndex].value;
-  switch(choice){
-    case "random":
-      randomMaze();
-      break;
-    case "recursive":
-      recursiveMaze();
-      break;
-  }
+    finishedMaze=false;
+    filled=0;
+    //var choice = document.getElementById("mazeselect").value;
+    var select = document.getElementById("mazeselectlarge");
+    var choice = select.options[select.selectedIndex].value;
+    alert(choice);
+    switch(choice){
+      case "random":
+        randomMaze();
+        console.log("3");
+        break;
+      case "recursive":
+        recursiveMaze();
+        console.log("4");
+        break;
+    }
 }
+
 
 let randomMaze = function(){
-  clearBoard();
   squares = [];
   for(let i=0;i<numRows;i++){
     var newRow = [];
@@ -63,7 +72,7 @@ let random = function(){
   var percentage = filled/(numCols*numRows);
 
   // Do not want any more than 40% of the squares to be filled
-  if(percentage>0.4){
+  if(percentage>0.3){
     finishedMaze=true;
   }
   // Add some more squares
@@ -144,7 +153,7 @@ let checkSquare = function(x,y){
 // Generates the mazes recursively
 let recursiveMaze = function(){
   // Clear the existing board
-  clearBoard();
+  //clearBoard();
 
   // Set the borders to black
   borders();

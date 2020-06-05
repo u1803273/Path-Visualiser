@@ -128,12 +128,16 @@
           Generate Topography
         </div>
 
-        <div class="navButton" id="randomWalls" >
+        <!-- <div class="navButton" id="randomWalls" >
           <select name="maze" id="mazeselectsmall" onchange="mazeChangeSmall()" class="algo_select">
             <option selected disabled>Select Maze or Pattern</option>
             <option value="random" style="color:#262626;">Random</option>
             <option value="recursive" style="color:#262626;">Wide Corridor</option>
           </select>
+
+        </div> -->
+        <div class="navButton" id="walls" onclick="recursiveMaze()">
+          Generate Maze
         </div>
       </div>
     </nav>
@@ -155,14 +159,18 @@
           Generate Topography
         </div>
 
-        <div class="navButton" id="randomWalls" >
+        <!-- <div class="navButton" id="randomWalls" >
           <select name="maze" id="mazeselectlarge" onchange="mazeChangeLarge()" class="algo_select">
             <option selected disabled>Select Maze or Pattern</option>
             <option value="random" style="color:#262626;">Random</option>
             <option value="recursive" style="color:#262626;">Wide Corridor</option>
           </select>
+        </div> -->
+        <div class="navButton" id="walls" onclick="recursiveMaze()">
+          Generate Maze
         </div>
     </nav>
+
 
     <!-- Choice of algorithms -->
     <div id="algo-choice" class="text-center">
