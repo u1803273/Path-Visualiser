@@ -337,7 +337,7 @@ let createTable = function(){
 
 // This is the main function being run when the page is loaded
 let generateGrid = function(){
-  var width = document.getElementById('table').offsetWidth;
+  var width = 0.8 * window.innerWidth;
   var height = (0.7 * window.innerHeight);
 
   numRows = Math.floor(height/20);
