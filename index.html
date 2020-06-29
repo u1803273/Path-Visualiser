@@ -1,210 +1,270 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Path Visualisation">
-    <meta name="keywords" content="HTML, CSS, JavaScript, graphs,visualiser, graph visualiser, a*, astar, bfs, breadth,breadth first search, search, dfs, dfs search, dijkstra, dijkstra search, lowest, cost, first, greedy, joshua, adams, warwick, uni, path finding, portolfio">
-    <meta name="author" content="Joshua Adams">
-    <title>Path Visualiser</title>
+<html lang="en">
 
-    <!-- Loads the fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Oswald:wght@300&family=Roboto:wght@300&display=swap" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body onload="main()">
+  <title>PATH VISUALISER</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-    <!-- Page 1 of the modal -->
-    <div id="modal1" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="header">
-          <div class="pageNumber">1</div>
-          <h1>PATHFINDING VISUALISER</h1>
-          <div class="skip" onclick="modal2()">Next</div>
-        </div>
-        <h2>This short tutorial will walk you through the features of this application</h2>
+  <!-- BOOTSTRAP -->
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-        <br><br>
-          <img src="img/selectAlgorithm.png" alt="" class="text-center" id="selectAlgorithmImage">
-          <h2>Select from one of the six algorithms:</h2>
-          <br>
-          <ol>
-            <li><b style="font-size:18px;">A*:</b> Uses heuristics to hone in on the goal. Each node is given a cost; the sum of the distance left to travel to the goal + the cost of travelling to the current square. This incorporates costs from topographies.<br> Guaranteed to find the optimal path </li>
-            <li><b style="font-size:18px;">Dijkstra:</b> Works out the shortest cost of the path from the start to the goal. On an empty grid, it acts the same as a BFS, however, unlike a BFS, will take costs into account on topographies.</li>
-            <li><b style="font-size:18px;">BFS: </b>Breadth First Search acts unintelligently, expanding all nodes from the start until it reaches the destination. It has no intuition of which path is the 'best' and which potentially leads closer to the goal. On a maze, it will expand along all corridors simultaneously.</li>
-            <li><b style="font-size:18px;">DFS: </b>Depth First Search acts unintelligently, expanding all the nodes from the start until it reaches the destination. It similarly has no intuition of which path is best, but expands all along a single path until there exists no further unexplored squares, at which point it begins to backtrack. On a maze, it will expand all the way along a corridor until it reaches a dead end before it decides to backtrack and attempt a new route.</li>
-            <li><b style="font-size:18px;">Greedy: </b>Greedy search order nodes via a heuristic, and always chooses the node closest to the goal. It is oblivious to cost, and so does not alter depending on topographies.</li>
-            <li><b style="font-size:18px;">Lowest Cost First:</b> Lowest Cost first chooses squares based on their cost. If no topography exists it exhibits behaviour identical to BFS. However, on a topography graph, it will follow the path that leads to the goal with the lowest goal (thereby avoiding going over hills). It will find the path of least cost, but it may not be the shortest.</li>
-          </ol>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
 
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
+  <!-- Custom style sheets -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body onload="generateGrid()">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header-transparent">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <h1 style="color:white;font-size:20px;">JOSHUA ADAMS</h1>
       </div>
 
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="index.html">Home</a></li>
+          <li><a href="#info">Info</a></li>
+          <li><a href="#algorithms">Algorithms</a></li>
+          <li><a href="#options">RUN</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <!-- Page 2 of the modal -->
-    <div id="modal2" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="header">
-          <div class="pageNumber">2</div>
-          <h1>TOPOGRAPHIES</h1>
-          <div class="skip" onclick="modal3()">Next</div>
-        </div>
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
+      <h1 style="font-family: 'Comfortaa', cursive; font-size:60px;">PATH VISUALISER</h1>
+      <h2 >Run different path finding algorithms on various mazes and topographies.</h2>
+      <a href="#info" class="btn-get-started">Get Started!</a>
+    </div>
+  </section><!-- End Hero Section -->
 
-        <div class="flex">
-          <img src="img/topo2.png" alt="" id="topoImage">
-          <div class="text">
-            <h2>Generates a map over the grid</h2>
+  <main id="main">
 
-            <p>Clicking Generate Topography creates a basic map as shown, with peaks highlighted in red,
-            having an additonal cost of traversal of 5, dark pink 2 and light pink of 1.</p>
-            <br>
-            <p>Algrithms such as A* search and Lowest Cost First act differently when run on a grid with a topography present.</p>
+    <!-- ======= Info Section ======= -->
+    <!-- Provides information about using the service -->
+    <section id="info">
+      <div class="container" data-aos="fade-up">
+        <div class="row info-container">
+
+          <div class="col-lg-12 content order-lg-1 order-2">
+            <h2 class="text-center">HOW TO USE</h2>
+            <p class="text-center">
+              The path Visualiser software allows you to run various path finding algorithms, and the software will
+              visualise the order in which the cells are explored, as well as the final, shortest path.<br><br>
+              Click on any cell to toggle it to a wall, and click on a wall to remove it.
+              <br><br>
+              Select an algorithm and then click run to watch it traverse the grid.
+            </p>
+
+            <h3>OPTIONS</h3>
+            <p>There are five options to toggle with when using the software:</p>
+
+            <ol>
+              <li data-aos="fade-up" data-aos-delay="100">
+                <div class="container">
+                  <p><span class="h4" style="padding-right:20px;">CLEAR BOARD: </span>Clears every wall, topography and trail from the board, leaving only the start and end cells</p>
+                </div>
+              </li>
+              <li data-aos="fade-up" data-aos-delay="100">
+                <div class="container">
+                  <p><span class="h4" style="padding-right:20px;">RESTORE BOARD: </span>Restores the board to its initial state, preserving the start and end positions, the topographies and/or walls. </p>
+                </div>
+              </li >
+              <li data-aos="fade-up" data-aos-delay="100">
+                <div class="container">
+                  <p><span class="h4" style="padding-right:20px;">RESET START AND END: </span>Resets the start and end positions</p>
+                </div>
+              </li>
+              <li data-aos="fade-up" data-aos-delay="100">
+                <div class="container">
+                  <p><span class="h4" style="padding-right:20px;">GENERATE TOPOGRAPHIES: </span>Spawns random topographies, assigning each cell with a weight from 0-5. Higher weights equate to a higher cost of traversal to that cell.</p>
+                </div>
+              </li>
+              <li data-aos="fade-up" data-aos-delay="100">
+                <div class="container">
+                  <p><span class="h4" style="padding-right:20px;">GENERATE MAZE: </span>Generates a random maze for the algorithms to solve.</p>
+                </div>
+              </li>
+            </ol>
 
           </div>
-      </div>
 
-      </div>
-
-    </div>
-
-    <!-- Page 3 of the modal -->
-    <div id="modal3" class="modal">
-      <!-- Modal content -->
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="header">
-          <div class="pageNumber">3</div>
-          <h1>WALLS</h1>
-          <div class="skip" onclick="closeModal()">Finish</div>
+          <!-- <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div> -->
         </div>
 
-        <div class="flex">
-          <img src="img/maze.png" alt="" id="topoImage">
-          <div class="text">
-            <h2>Place walls onto the grid for the algorithm to avoid</h2>
+      </div>
+    </section><!-- End About Section -->
 
-            <p>
-              Click a square to toggle it to a wall, and drag over the screen to place walls in a line. The algorithm will avoid the walls and find the shortest path while avoiding them.
-            </p>
-            <br>
-            <p>
-              Clicking on the mazes and patterns button will allow you to create mazes for which the algorithm will have to navigate. Algorithms such as BFS and DFS will handle these
-              differently, with heuristic searches such as A* and Greedy Search attempting to hone in on the target without the need to examine every possible corridor.
-            </p>
-            <br>
-            <p>
-              The start and end nodes can be dragged to alter their positions.
-            </p>
+
+    <!-- ======= Algorithms Section ======= -->
+    <section id="algorithms">
+      <div class="container" data-aos="fade-up">
+        <div class="section-header">
+          <h3 class="section-title">Algorithms</h3>
+          <p class="section-description">A brief look at each algorithm:</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+            <div class="box">
+              <h4 class="title"><a href="">DEPTH FIRST SEARCH</a></h4>
+              <p class="description">DFS uses a stack to maintain the frontier, and so one an empty grid will snake back and forth before backtracking. On a maze it will explore the entirety of
+              one corridor before backtracking upon reaching a dead end. It has no use of heuristics.</p>
+            </div>
           </div>
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+            <div class="box">
+              <h4 class="title"><a href="">BREADTH FIRST SEARCH</a></h4>
+              <p class="description">BFS uses a queue to maintain the frontier. Every possible outgoing square from the frontier is expanded in each iteration. In a maze, it will traverse every corridor simultaneously.
+              It has no use of heuristics.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+            <div class="box">
+              <h4 class="title"><a href="">A*</a></h4>
+              <p class="description">A* search uses heuristics to hone in on the goal. It keeps track of two values; the distance from the start node, and the distance to the goal, and chooses the cell with the smallest cost at each iteration.
+              On a topography, it will chose the route of smallest cost (i.e avoiding the costly squares).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+            <div class="box">
+              <h4 class="title"><a href="">Dijkstra's</a></h4>
+              <p class="description">Maintains a priority queue of each cell, ordered by the shortest distance to get there. On a blank grid, will act like a BFS. On a topography, will find the route of smallest cost to the goal.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+            <div class="box">
+              <h4 class="title"><a href="">Lowest Cost First</a></h4>
+              <p class="description">Orders cells by the cost to reach them, not the distance. On a blank grid acts as a BFS as every cell has no cost associated with it. On a topography, finds the path of least cost, even if this may not be the shortest.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6" data-aos="zoom-in">
+            <div class="box">
+              <h4 class="title"><a href="">GREEDY BEST FIRST SEARCH</a></h4>
+              <p class="description">Uses heuristics to attempt to hone in on the goal. It has no regard for cost, for at each iteration it picks the cell closest to the goal in the hopes of reaching it quicker.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
+    </section><!-- End Services Section -->
+
+    <!-- The actual grid -->
+    <!-- ======= Portfolio Section ======= -->
+    <section id="options" class="options">
+      <div class="container" data-aos="fade-up">
+        <div class="section-header">
+          <h3 class="section-title">LETS GO!</h3>
+          <p class="section-description">Pick an algorithm and get running! Remember to add walls and topographies</p>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="options-flters">
+              <li id="clearboard" onclick="clearBoard()">CLEAR BOARD</li>
+              <li id="clearTrail" onclick="clearTrail()">RESTORE BOARD</li>
+              <li id="reset" onclick="reset()">RESET START AND END</li>
+              <li id="topography" onclick="topography()">GENERATE TOPOGRAPHY</li>
+              <li id="walls" onclick="recursiveMaze()">GENERATE MAZES</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row text-center" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <select name="algorithms" id="algorithmSelectBox" style="font-size:20px; font-family:'Comfortaa',sans-serif;border: none;">
+              <option selected disabled>Select Algorithm</option>
+              <option value="a">A*</option>
+              <option value="dj">Dijkstra</option>
+              <option value="bfs">Breadth First Search</option>
+              <option value="dfs">Depth First Search</option>
+              <option value="greedy">Greedy Search</option>
+              <option value="low">Lowest Cost First</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row text-center" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+              <p id="run" onclick="runAlgorithm()" class="run">RUN</p>
+          </div>
+        </div>
+
+        <!-- The actual board -->
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center"> <!-- style="background:#E0DEDE;" -->
+            <table id="table" class="table text-center">
+
+            </table>
+          </div>
+        </div>
 
       </div>
+    </section>
 
-    </div>
+  </main>
 
-    <!-- The nav bar for small devices -->
-    <nav class="smallScreen">
-      <h1 onclick="openModal()">PATHFINDING VISUALISATION</h1>
-      <div class="navrow" id="firstrow">
-        <div class="navButton" id="clearboard" onclick="clearBoard()">
-          Clear Board
-        </div>
-        <div class="navButton" id="clearTrail" onclick="clearTrail()">
-          Restore Board
-        </div>
-        <div class="navButton" id="reset" onclick="reset()">
-          Reset Start and End
-        </div>
-      </div>
-
-      <div class="navrow" id="secondrow">
-        <div class="navButton" id="topography" onclick="topography()">
-          Generate Topography
-        </div>
-
-        <!-- <div class="navButton" id="randomWalls" >
-          <select name="maze" id="mazeselectsmall" onchange="mazeChangeSmall()" class="algo_select">
-            <option selected disabled>Select Maze or Pattern</option>
-            <option value="random" style="color:#262626;">Random</option>
-            <option value="recursive" style="color:#262626;">Wide Corridor</option>
-          </select>
-
-        </div> -->
-        <div class="navButton" id="walls" onclick="recursiveMaze()">
-          Generate Maze
-        </div>
-      </div>
-    </nav>
-
-    <!-- The nav bar for large devices -->
-    <nav class="bigScreen">
-      <h1 onclick="openModal()">PATHFINDING VISUALISATION</h1>
-        <div class="navButton" id="clearboard" onclick="clearBoard()">
-          Clear Board
-        </div>
-        <div class="navButton" id="clearTrail" onclick="clearTrail()">
-          Restore Board
-        </div>
-        <div class="navButton" id="reset" onclick="reset()">
-          Reset Start and End
-        </div>
-
-        <div class="navButton" id="topography" onclick="topography()">
-          Generate Topography
-        </div>
-
-        <!-- <div class="navButton" id="randomWalls" >
-          <select name="maze" id="mazeselectlarge" onchange="mazeChangeLarge()" class="algo_select">
-            <option selected disabled>Select Maze or Pattern</option>
-            <option value="random" style="color:#262626;">Random</option>
-            <option value="recursive" style="color:#262626;">Wide Corridor</option>
-          </select>
-        </div> -->
-        <div class="navButton" id="walls" onclick="recursiveMaze()">
-          Generate Maze
-        </div>
-    </nav>
+  <!-- Loads the JS files for the different algorithms -->
+  <script type="text/javascript" src="assets/js/algorithms/walls.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/lowestcost.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/greedy.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/topography.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/cell.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/queue.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/priorityqueue.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/stack.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/dijkstra.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/search.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/astarsearch.js"></script>
+  <script type="text/javascript" src="assets/js/algorithms/grid.js"></script>
 
 
-    <!-- Choice of algorithms -->
-    <div id="algo-choice" class="text-center">
-      <select name="algorithms" id="algorithms" class="algo_select">
-        <option selected disabled>Select Algorithm</option>
-        <option value="a">A*</option>
-        <option value="dj">Dijkstra</option>
-        <option value="bfs">Breadth First Search</option>
-        <option value="dfs">Depth First Search</option>
-        <option value="greedy">Greedy Search</option>
-        <option value="low">Lowest Cost First</option>
-      </select>
-    </div>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
 
-    <div id="run" class="run_btn text-center">
-      <p onclick="runAlgorithm()">RUN</p>
-    </div>
+  <!-- Executes a function when you scroll to an element -->
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/superfish/superfish.min.js"></script>
+  <script src="assets/vendor/hoverIntent/hoverIntent.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
 
-    <table id="table" class="table text-center">
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
 
-    </table>
 
-    <script type="text/javascript" src="walls.js"></script>
-    <script type="text/javascript" src="lowestcost.js"></script>
-    <script type="text/javascript" src="greedy.js"></script>
-    <script type="text/javascript" src="topography.js"></script>
-    <script type="text/javascript" src="cell.js"></script>
-    <script type="text/javascript" src="queue.js"></script>
-    <script type="text/javascript" src="priorityqueue.js"></script>
-    <script type="text/javascript" src="stack.js"></script>
-    <script type="text/javascript" src="dijkstra.js"></script>
-    <script type="text/javascript" src="search.js"></script>
-    <script type="text/javascript" src="astarsearch.js"></script>
-    <script type="text/javascript" src="grid.js"></script>
+</body>
 
-  </body>
 </html>

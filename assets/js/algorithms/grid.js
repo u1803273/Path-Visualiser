@@ -284,7 +284,8 @@ let runAlgorithm = function(){
   disableButtons();
   // Clear any previous trails
   clearTrail();
-  var choice = document.getElementById('algorithms').value;
+  //var choice = document.getElementById('algorithms').value;
+  var choice = document.getElementById('algorithmSelectBox').value;
   switch(choice){
     case "a":
       astar();
@@ -333,73 +334,11 @@ let createTable = function(){
   }
 }
 
-/* This pertains to the modal windows */
-
-// Get the modal
-var modal = document.getElementById("modal1");
-
-// Get the <span> element that closes the modal
-var span1 = document.getElementsByClassName("close")[0];
-var span2 = document.getElementsByClassName("close")[1];
-var span3 = document.getElementsByClassName("close")[2];
-
-// When the user clicks on <span> (x), close the modal
-span1.onclick = function() {
-  modal.style.display = "none";
-}
-
-span2.onclick = function() {
-  modal.style.display = "none";
-}
-
-span3.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
-// Moves from the first modal to the second
-let modal2 = function(){
-  // Set the current modal to display none
-  modal.style.display = "none";
-
-  // Get the new modal
-  modal = document.getElementById("modal2");
-  // set to display block
-  modal.style.display = "block";
-}
-
-// Moves from the first modal to the second
-let modal3 = function(){
-  // Set the current modal to display none
-  modal.style.display = "none";
-
-  // Get the new modal
-  modal = document.getElementById("modal3");
-  // set to display block
-  modal.style.display = "block";
-}
-
-// Closes the modal window
-let closeModal = function(){
-  modal.style.display = "none";
-}
-
-// Opens the modal window
-let openModal = function(){
-  modal = document.getElementById("modal1");
-  modal.style.display="block";
-}
 
 // This is the main function being run when the page is loaded
-let main = function(){
-  var width = (0.95 * window.innerWidth);
-  var height = (0.9 * window.innerHeight) - document.querySelector(".smallScreen").offsetHeight - document.querySelector(".bigScreen").offsetHeight - document.querySelector("#algo-choice").offsetHeight - document.querySelector("#run").offsetHeight;
+let generateGrid = function(){
+  var width = document.getElementById('table').offsetWidth;
+  var height = (0.7 * window.innerHeight);
 
   numRows = Math.floor(height/20);
   numCols = Math.floor(width/20);
@@ -407,8 +346,6 @@ let main = function(){
   // Creates the table depending on the width of the screen
   createTable();
 
-  // Opens the modal window
-  modal.style.display = "block";
 
   for(let i=0;i<numRows;i++){
     var newRow =[];

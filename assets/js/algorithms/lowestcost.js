@@ -105,7 +105,6 @@ let lowestBody = function(){
     var x = newElement.x;
     var y = newElement.y;
     var f = newElement.f;
-    console.log(f);
     if(x == endX && y==endY){
       finished = true;
       found = true;
@@ -167,7 +166,7 @@ let lowestBody = function(){
 
   }
 
-  
+
   if (!finished) {
     setTimeout(lowestBody,speed);
   }else{
